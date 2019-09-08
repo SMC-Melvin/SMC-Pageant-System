@@ -20,7 +20,6 @@ class App extends Component {
       USER_ROLE.JUDGE_FOR_FEMALE
     ];
     const adminAccess = [USER_ROLE.ADMIN];
-    debugger;
     return (
       <div>
         <Switch>

@@ -70,7 +70,6 @@ class Login extends Component {
   };
 
   routeUser = data => {
-    debugger;
     const [defaultCategory] = this.state.categories || [];
     const { path } = defaultCategory || { path: '' };
     const routeUrl = data.RoleId === USER_ROLE.ADMIN ? '/' : `/judges/${path}`;
@@ -100,7 +99,6 @@ class Login extends Component {
 
   async componentDidMount() {
     try {
-      debugger;
       const { data } = await categoryService.getCategory();
       const categories = data && data.map(categoryBuilderForUI);
       this.setState({ categories });
