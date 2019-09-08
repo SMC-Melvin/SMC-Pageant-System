@@ -1,0 +1,48 @@
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #111;
+    color: white;
+    
+    padding: 50px;
+
+    .social{
+        text-align: center;
+    }
+
+    .img-social{
+        transition: all 3s;
+        transition-timing-function: ease-in-out; 
+        cursor: pointer;
+        margin: 0 10px;
+    }
+
+    .img-social:hover{
+        transform: rotate(1080deg);
+    }
+
+    .line{
+        background-color: white;
+        height: 1px;
+        width: 100%;
+        margin-top: 35px;
+    }
+
+    .footer-text{
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+
+        
+
+        .flag{
+            background-image: url('../../../assets/images/svg/philippines.svg');
+            background-size: cover;
+            height: 20px;
+            width: 20px;
+        }
+    }
+    
+}
