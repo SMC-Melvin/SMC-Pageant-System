@@ -25,7 +25,6 @@ class App extends Component {
         <Switch>
           <Route path="/report" component={Report} />
           <Route path="/login" component={Login} />
-          )} />
           <ProtectedRoute
             accessRoleIds={judgeAccess}
             path="/judges/:category"
