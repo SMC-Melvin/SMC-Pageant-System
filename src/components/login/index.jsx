@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
-import './style.scss';
+import SweetAlert from 'sweetalert2-react';
 
 import 'jquery';
 import 'popper.js';
@@ -15,6 +15,12 @@ import AdminMain from '../admin-main/index';
 
 import authService from '../../services/authService';
 import candidateService from '../../services/candidateService';
+import { getCurrentUser } from '../../utilities/auth.util';
+import { USER_ROLE } from '../../constants/auth.constant';
+import categoryService from '../../services/categoryService';
+import { categoryBuilderForUI } from '../../mappers/category.mapper';
+
+import './style.scss';
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +28,9 @@ class Login extends Component {
     this.state = {
       fullname: '',
       password: '',
-      errors: []
+      isInvalidAccount: false,
+      errors: [],
+      categories: []
     };
   }
 
@@ -45,25 +53,33 @@ class Login extends Component {
   }
 
   onFullnameChange = e => {
-    this.setState({ fullname: e.target.value });
+    this.setState({ isInvalidAccount: false, fullname: e.target.value });
     this.clearValidationErr('fullname');
   };
 
   onPasswordChange = e => {
-    this.setState({ password: e.target.value });
+    this.setState({ isInvalidAccount: false, password: e.target.value });
     this.clearValidationErr('password');
   };
 
   getCandidates = async () => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    debugger;
     try {
       const { data } = await candidateService.getCandidates(currentUser.Id);
-      debugger;
     } catch (error) {}
   };
 
-  async submitLogin(e) {
+  routeUser = data => {
+    debugger;
+    const [defaultCategory] = this.state.categories || [];
+    const { path } = defaultCategory || { path: '' };
+    const routeUrl = data.RoleId === USER_ROLE.ADMIN ? '/' : `/judges/${path}`;
+    localStorage.setItem('currentUser', JSON.stringify(data));
+    this.props.history.replace(routeUrl);
+  };
+
+  submitLogin = async event => {
+    event.preventDefault();
     const { fullname, password } = this.state;
     if (!fullname) {
       this.showValidationErr('fullname', 'User Name cannot be null');
@@ -76,24 +92,23 @@ class Login extends Component {
 
     try {
       const { data } = await authService.login(fullname, password);
-      debugger;
-      const routeUrl = data.RoleId === 1 ? '/' : '/judge';
-      localStorage.setItem('currentUser', JSON.stringify(data));
-      this.props.history.replace(routeUrl);
+      this.routeUser(data);
     } catch (error) {
-      console.log('Invalid Username or Password');
+      this.setState({ isInvalidAccount: true });
     }
-  }
+  };
 
-  componentDidMount() {
-    const { history } = this.props;
-    const currentUserStorage = localStorage.getItem('currentUser');
-    const currentUser = currentUserStorage && JSON.parse(currentUserStorage);
-    if (currentUser && currentUser.username) {
-      history.replace('/');
-    }
+  async componentDidMount() {
+    try {
+      debugger;
+      const { data } = await categoryService.getCategory();
+      const categories = data && data.map(categoryBuilderForUI);
+      this.setState({ categories });
+      const currentUser = getCurrentUser();
+      if (!currentUser) return;
+      this.routeUser(currentUser);
+    } catch (error) {}
   }
-
   render() {
     let fullnameErr = null,
       passwordErr = null;
@@ -123,40 +138,35 @@ class Login extends Component {
 
               <hr />
 
-              <input
-                type="text"
-                placeholder="User Name"
-                className="form-control textbox"
-                onChange={this.onFullnameChange}
+              <form onSubmit={this.submitLogin}>
+                <input
+                  type="text"
+                  placeholder="User Name"
+                  className="form-control textbox"
+                  onChange={this.onFullnameChange}
+                />
+                <small>{fullnameErr ? fullnameErr : ''}</small>
+
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="form-control textbox"
+                  onChange={this.onPasswordChange}
+                />
+                <small>{passwordErr ? passwordErr : ''}</small>
+
+                <div className="col-md-12 padding-zero btn-group margin-top-10">
+                  <button type="submit" className="btn btn-login">
+                    Login
+                  </button>
+                </div>
+              </form>
+              <SweetAlert
+                show={this.state.isInvalidAccount}
+                type="error"
+                title="Security Authentication"
+                text="Invalid Username or Password"
               />
-              <small>{fullnameErr ? fullnameErr : ''}</small>
-
-              <input
-                type="password"
-                placeholder="Password"
-                className="form-control textbox"
-                onChange={this.onPasswordChange}
-              />
-              <small>{passwordErr ? passwordErr : ''}</small>
-
-              <select name="" id="" className="form-control select-button">
-                <option value="" selected disabled hidden>
-                  Will Vote for:
-                </option>
-                <option value="male">MALE</option>
-                <option value="female">FEMALE</option>
-              </select>
-
-              <div className="col-md-12 padding-zero btn-group margin-top-10">
-                <button
-                  className="btn btn-login"
-                  onClick={this.submitLogin.bind(this)}
-                >
-                  Login
-                </button>
-
-                <button onClick={this.getCandidates}>Test</button>
-              </div>
             </div>
           </div>
         </div>
