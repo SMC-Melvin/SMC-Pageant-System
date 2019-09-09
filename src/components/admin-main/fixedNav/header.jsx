@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import 'jquery';
 import 'popper.js';
@@ -18,43 +19,62 @@ import trash from '../../../assets/images/svg/trash.svg';
 // import copyright from '../../assets/images/svg/copyright.svg';
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-    render() { 
-        return ( 
-            <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <div className="container">
-                        <a className="navbar-brand text-uppercase">Pageant System</a>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="nav navbar-nav ml-auto">
-                                <li className="nav-item active">
-                                    <a className="nav-link">Judge <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link">Categories</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link">Candidate</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link">Print Reports</a>
-                                </li>
-                                <li className="nav-item active">
-                                    <a className="nav-link margin-left-50"><img src={logout} alt="" width="20px" height="20px"/></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  handleUserLogout = () => {
+    localStorage.removeItem('currentUser');
+    this.props.history.replace('/login');
+  };
+  render() {
+    return (
+      <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container">
+            <a className="navbar-brand text-uppercase">Pageant System</a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="nav navbar-nav ml-auto">
+                <li className="nav-item active">
+                  <a className="nav-link">
+                    Judge <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Categories</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Candidate</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Print Reports</a>
+                </li>
+                <li className="nav-item active">
+                  <a
+                    className="nav-link margin-left-50"
+                    onClick={this.handleUserLogout}
+                  >
+                    <img src={logout} alt="" width="20px" height="20px" />
+                  </a>
+                </li>
+              </ul>
             </div>
-         );
-    }
+          </div>
+        </nav>
+      </div>
+    );
+  }
 }
- 
-export default Header;
+
+export default withRouter(Header);
