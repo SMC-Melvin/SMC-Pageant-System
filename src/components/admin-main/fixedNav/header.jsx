@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import 'jquery';
 import 'popper.js';
@@ -32,7 +32,9 @@ class Header extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
-            <a className="navbar-brand text-uppercase">Pageant System</a>
+            <Link to="/" className="navbar-brand text-uppercase">
+              Pageant System
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -47,16 +49,21 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="nav navbar-nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link">
-                    Judge <span class="sr-only">(current)</span>
-                  </a>
+                  <Link to="/" className="nav-link">
+                    Home
+                  </Link>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item active">
+                  <Link to="/users" className="nav-link">
+                    Users
+                  </Link>
+                </li>
+                {/* <li className="nav-item">
                   <a className="nav-link">Categories</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link">Candidate</a>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <a className="nav-link">Print Reports</a>
                 </li>

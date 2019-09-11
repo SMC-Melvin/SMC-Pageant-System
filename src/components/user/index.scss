@@ -1,0 +1,42 @@
+.table {
+  margin-top: 60px;
+}
+
+.modal {
+  .padding-150 {
+    padding: 30px 50px;
+  }
+
+  .textbox {
+    margin-top: 15px;
+  }
+
+  .modal-footer {
+    .btn-save {
+      background-color: gray;
+      border: 1px solid maroon;
+      width: 150px;
+      color: white;
+      padding: 10px;
+    }
+    .btn-save:hover {
+      background-color: maroon;
+    }
+  }
+}
+
+.btn-add {
+  background-color: #f9f9f9;
+  width: 150px;
+  // border: 1px solid maroon;
+  color: black;
+  padding: 10px;
+  float: right;
+}
+
+.btn-add:hover {
+  background-color: maroon;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}

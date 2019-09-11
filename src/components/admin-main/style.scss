@@ -1,158 +1,109 @@
-body, html{
-    height: 100%;
+body,
+html {
+  height: 100%;
 }
 
-.main-section{
-    .margin-left-50{
-        margin-left: 50px;
-    }
+.main-section {
+  .margin-left-50 {
+    margin-left: 50px;
+  }
 
-    .padding-edit{
-        padding: 15px 3px;
-    }
+  .padding-edit {
+    padding: 15px 3px;
+  }
 
-    .cursor:hover{
-        cursor: pointer;
-    }
+  .cursor:hover {
+    cursor: pointer;
+  }
 
-    .sidebar{
-        height: 100%;
-        width: 25%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 50px;        
-    }
+  .sidebar {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 50px;
+  }
 
-    .main{
-        padding-left: 26%;
+  .main {
+    padding-left: 26%;
 
-        .align-items{
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-        
+    .align-items {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
 
-            .logo-box{
-                background-color: maroon;
-                margin-left: 20px;
-                padding: 20px;
-                width: 450px;
-
-                .align-group{
-                    position: relative;
-                    display: inline-block;
-                    vertical-align: middle;
-                    .logo{
-                        background-image: url('../../assets/images/svg/logo.svg');
-                        background-size: cover;
-                        height: 100px;
-                        width: 100px;
-                        margin-right: 50px;
-                    } 
-                    .pageant-text{
-                        font-size: 40px;
-                    } 
-                }
-            }
-        }  
-    }
-
-    .table{
-        margin-top: 60px;
-    }
-
-    .modal{
-
-        .padding-150{
-            padding: 30px 50px;
-        }
-
-        .textbox{
-            margin-top: 15px;
-            
-        }
-
-        .modal-footer{
-            .btn-save{
-                background-color: gray;
-                border: 1px solid maroon;
-                width: 150px;
-                color: white;
-                padding: 10px;
-            }
-            .btn-save:hover{
-                background-color: maroon;
-            }
-        }
-    }
-
-    .btn-add{
-        background-color: #F9F9F9;
-        width: 150px;
-        // border: 1px solid maroon;
-        color: black;
-        padding: 10px;
-        float: right;
-    }
-
-    .btn-add:hover {
+      .logo-box {
         background-color: maroon;
-        font-weight: bold;
-        cursor: pointer;
-        color: white;
+        margin-left: 20px;
+        padding: 20px;
+        width: 450px;
+
+        .align-group {
+          position: relative;
+          display: inline-block;
+          vertical-align: middle;
+          .logo {
+            background-image: url('../../assets/images/svg/logo.svg');
+            background-size: cover;
+            height: 100px;
+            width: 100px;
+            margin-right: 50px;
+          }
+          .pageant-text {
+            font-size: 40px;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #111;
+    color: white;
+
+    padding: 50px;
+
+    .social {
+      text-align: center;
     }
 
-    .footer{
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #111;
-        color: white;
-        
-        padding: 50px;
-
-        .social{
-            text-align: center;
-        }
-
-        .img-social{
-            transition: all 3s;
-            transition-timing-function: ease-in-out; 
-            cursor: pointer;
-            margin: 0 10px;
-        }
-
-        .img-social:hover{
-            transform: rotate(1080deg);
-        }
-
-        .line{
-            background-color: white;
-            height: 1px;
-            width: 100%;
-            margin-top: 35px;
-        }
-
-        .footer-text{
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-
-            
-
-            .flag{
-                background-image: url('../../assets/images/svg/philippines.svg');
-                background-size: cover;
-                height: 20px;
-                width: 20px;
-            }
-        }
-        
+    .img-social {
+      transition: all 3s;
+      transition-timing-function: ease-in-out;
+      cursor: pointer;
+      margin: 0 10px;
     }
-  
+
+    .img-social:hover {
+      transform: rotate(1080deg);
+    }
+
+    .line {
+      background-color: white;
+      height: 1px;
+      width: 100%;
+      margin-top: 35px;
+    }
+
+    .footer-text {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+
+      .flag {
+        background-image: url('../../assets/images/svg/philippines.svg');
+        background-size: cover;
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
 }

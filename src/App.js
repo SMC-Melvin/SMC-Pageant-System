@@ -32,7 +32,6 @@ class App extends Component {
           />
           <ProtectedRoute
             accessRoleIds={adminAccess}
-            exact
             path="/"
             component={Admin}
           />
