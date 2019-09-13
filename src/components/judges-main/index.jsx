@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
+import SweetAlert from 'sweetalert2-react';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/src/sweetalert2.scss';
 
 import Header from './header';
 import './style.scss';
@@ -23,6 +26,8 @@ class JudgesMain extends Component {
       cand: [],
       userId: '',
       id: '',
+      alert: null,
+      isValidated: false,
       currentUser: getCurrentUser(),
       candidate: {
         id: 0,
@@ -31,6 +36,8 @@ class JudgesMain extends Component {
       }
     };
   }
+
+  alertMessage = () => {};
 
   // candidates = async event => {
   //   event.preventDefault();
@@ -41,6 +48,23 @@ class JudgesMain extends Component {
   //   );
   //   console.log(data);
   // };
+
+  saveScore = () => {
+    // this.setState({ isValidated: true });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You can still change your score anytime!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, save it!'
+    }).then(result => {
+      if (result.value) {
+        Swal.fire('SAVED!', 'Your score has been save.', 'success');
+      }
+    });
+  };
 
   async componentDidMount() {
     try {
@@ -75,7 +99,7 @@ class JudgesMain extends Component {
 
           <Slider {...settings}>
             {this.state.cand.map(getCand => (
-              <div className="col-md-12 padding-zero">
+              <div className="col-md-12">
                 <div className="row">
                   <div className="col-md-6">
                     <div className="profile-pic"></div>
@@ -107,7 +131,7 @@ class JudgesMain extends Component {
                       <button
                         type="button"
                         className="btn btn-save"
-                        onClick={this.candidates}
+                        onClick={this.saveScore}
                       >
                         Save
                       </button>
@@ -117,6 +141,11 @@ class JudgesMain extends Component {
               </div>
             ))}
           </Slider>
+          {this.state.cand.map(getNumber => (
+            <div className="flex-justify">
+              <div className="numbers">{getNumber.Number}</div>
+            </div>
+          ))}
         </div>
       </div>
     );
