@@ -1,5 +1,6 @@
 import httpService from './httpService';
-import { resource } from '../config.json';
+import { getCurrentUser } from './../utilities/auth.util';
+const resource = process.env.REACT_APP_RESOURCE;
 const baseUrl = `${resource}api`;
 
 const getCandidates = (userId, id = 0) => {
@@ -7,6 +8,13 @@ const getCandidates = (userId, id = 0) => {
   return httpService.get(url);
 };
 
+const getCandidateAverageByCategory = categoryId => {
+  const { Id: userId } = getCurrentUser();
+  const url = `${baseUrl}/candidate-score-by-category?userId=${userId}&categoryId=${categoryId}`;
+  return httpService.get(url);
+};
+
 export default {
-  getCandidates
+  getCandidates,
+  getCandidateAverageByCategory
 };

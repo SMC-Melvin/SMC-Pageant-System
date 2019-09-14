@@ -1,7 +1,6 @@
 import httpService from './httpService';
-import { resource } from '../config.json';
 import { userBuilderForAPI } from '../mappers/accout.mapper';
-
+const resource = process.env.REACT_APP_RESOURCE;
 const baseUrl = `${resource}api`;
 
 const getAccount = (username, password) => {

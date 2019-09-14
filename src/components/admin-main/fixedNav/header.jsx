@@ -58,15 +58,6 @@ class Header extends Component {
                     Users
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link">Categories</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link">Candidate</a>
-                </li> */}
-                <li className="nav-item">
-                  <a className="nav-link">Print Reports</a>
-                </li>
                 <li className="nav-item active">
                   <a
                     className="nav-link margin-left-50"

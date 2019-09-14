@@ -14,3 +14,68 @@ body {
 .judges {
   margin: 100px 0;
 }
+.printable-filters {
+  padding: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+
+  .filters-selector {
+    display: flex;
+    align-items: center;
+
+    .form-label {
+      font-weight: bold;
+      margin-bottom: 0;
+      margin-right: 8px;
+    }
+    .print-preview {
+      width: 250px;
+      margin-left: 8px;
+    }
+  }
+}
+.printable-container {
+  width: 100%;
+  padding: 30px;
+  margin-bottom: 15px;
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+
+  .empty-report {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon-file {
+      width: 250px;
+    }
+    .empty-body {
+      text-align: center;
+    }
+    .empty-message {
+      margin-top: 30px;
+    }
+  }
+  .print-report-container {
+    display: flex;
+    justify-content: flex-end;
+    .print-report {
+      display: flex;
+      align-items: center;
+      svg {
+        margin-right: 8px;
+        width: 18px;
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+}

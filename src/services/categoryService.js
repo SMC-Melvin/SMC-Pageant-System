@@ -1,5 +1,5 @@
 import httpService from './httpService';
-import { resource } from '../config.json';
+const resource = process.env.REACT_APP_RESOURCE;
 const baseUrl = `${resource}api`;
 
 const getCategory = () => {

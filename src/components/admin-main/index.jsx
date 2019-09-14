@@ -15,7 +15,6 @@ import NotFoundPage from './../common/not-found.component';
 
 class Admin extends Component {
   render() {
-    const { match } = this.props;
     return (
       <div className="main-section">
         <Header />
