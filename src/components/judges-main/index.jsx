@@ -44,6 +44,10 @@ class JudgesMain extends Component {
     this.slider.slickPrev();
   };
 
+  errorMessage = () => {
+    Swal.fire('Opsss!', 'Your score is either below 1 or above 10', 'error');
+  };
+
   onScoreChange = e => {
     this.setState({ isValidated: false, score: e.target.value });
   };
@@ -67,6 +71,8 @@ class JudgesMain extends Component {
   saveScore = () => {
     if (!this.state.score) {
       Swal.fire('Woooah!', 'You did not score at all!!', 'error');
+    } else if (this.state.score < 1 || this.state.score > 10) {
+      this.errorMessage();
     } else {
       Swal.fire({
         title: 'Are you sure?',
@@ -79,7 +85,6 @@ class JudgesMain extends Component {
       }).then(result => {
         if (result.value) {
           Swal.fire('SAVED!', 'Your score has been save.', 'success');
-          
           this.next();
         }
       });
