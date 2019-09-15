@@ -4,29 +4,8 @@ import './style.scss';
 
 const CategoryLink = ({ categories, match }) => {
   const { category: categoryParam } = match.params;
-  debugger;
-  const defaultLinkStyle = 'btn btn-tabs';
-
   return (
     <div className="category-link-main">
-      {/* <div className="col-md-12">
-        <div className="row">
-          {categories.map(category => (
-            <div key={category.id} className="col-md-2">
-              <Link
-                to={`${category.path}`}
-                className={
-                  categoryParam === category.path
-                    ? `${defaultLinkStyle} active`
-                    : `${defaultLinkStyle}`
-                }
-              >
-                {category.name}
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div> */}
       <div class="category-link-container">
         <div class="category-link">
           {categories.map(category => (
