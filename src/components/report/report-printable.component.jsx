@@ -32,7 +32,7 @@ class ReportPrintable extends Component {
           </thead>
           <tbody>
             {candidates.map(candidate => (
-              <tr className="text-center">
+              <tr key={candidate.CandidateId} className="text-center">
                 <td>{candidate.CandidateNumber}</td>
                 <td>{candidate.CandidateName}</td>
                 <td>{candidate.Faction}</td>

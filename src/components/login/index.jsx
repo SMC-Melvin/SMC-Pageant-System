@@ -29,8 +29,7 @@ class Login extends Component {
       fullname: '',
       password: '',
       isInvalidAccount: false,
-      errors: [],
-      categories: []
+      errors: []
     };
   }
 
@@ -70,7 +69,7 @@ class Login extends Component {
   };
 
   routeUser = data => {
-    const [defaultCategory] = this.state.categories || [];
+    const [defaultCategory] = this.props.categories || [];
     const { path } = defaultCategory || { path: '' };
     const routeUrl = data.RoleId === USER_ROLE.ADMIN ? '/' : `/judges/${path}`;
     localStorage.setItem('currentUser', JSON.stringify(data));
@@ -98,14 +97,9 @@ class Login extends Component {
   };
 
   async componentDidMount() {
-    try {
-      const { data } = await categoryService.getCategory();
-      const categories = data && data.map(categoryBuilderForUI);
-      this.setState({ categories });
-      const currentUser = getCurrentUser();
-      if (!currentUser) return;
-      this.routeUser(currentUser);
-    } catch (error) {}
+    const currentUser = getCurrentUser();
+    if (!currentUser) return;
+    this.routeUser(currentUser);
   }
   render() {
     let fullnameErr = null,

@@ -20,7 +20,13 @@ class Admin extends Component {
         <Header />
         <Switch>
           <Route exact path="/users" component={UserPage} />
-          <Route exact path="/" component={Report} />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Report {...props} categories={this.props.categories} />
+            )}
+          />
           <Route path="/not-found" component={NotFoundPage} />
           <Redirect to="/not-found" />
         </Switch>

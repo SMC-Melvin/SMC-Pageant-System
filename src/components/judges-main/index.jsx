@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import reactDom from 'react-dom';
-import SweetAlert from 'sweetalert2-react';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 
@@ -11,12 +9,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
-import authService from '../../services/authService';
+import CategoryLink from './../category/category-link.component';
+
 import candidateService from '../../services/candidateService';
 import { getCurrentUser } from '../../utilities/auth.util';
-import { USER_ROLE } from '../../constants/auth.constant';
-import categoryService from '../../services/categoryService';
-import { categoryBuilderForUI } from '../../mappers/category.mapper';
 
 class JudgesMain extends Component {
   constructor(props) {
@@ -109,36 +105,12 @@ class JudgesMain extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-    const { match } = this.props;
+    const { categories } = this.props;
     return (
       <div className="main">
         <Header />
         <div className="container">
-          <div className="tabs">
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Production</button>
-                </div>
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Swim Wear</button>
-                </div>
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Sports Wear</button>
-                </div>
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Preliminary</button>
-                </div>
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Formal Attire</button>
-                </div>
-                <div className="col-md-2">
-                  <button className="btn btn-tabs">Q & A</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <CategoryLink categories={categories} />
           <Slider ref={c => (this.slider = c)} {...settings}>
             {this.state.cand.map(getCand => (
               <div className="col-md-12" key={getCand.Id}>

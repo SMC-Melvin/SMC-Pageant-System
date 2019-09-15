@@ -11,9 +11,22 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import ProtectedRoute from './components/common/protectedRoute.component';
 import { USER_ROLE } from './constants/auth.constant';
+import categoryService from './services/categoryService';
+import { categoryBuilderForUI } from './mappers/category.mapper';
 
 class App extends Component {
+  state = {
+    categories: []
+  };
+  async componentDidMount() {
+    try {
+      const { data } = await categoryService.getCategory();
+      const categories = data && data.map(categoryBuilderForUI);
+      this.setState({ categories });
+    } catch (error) {}
+  }
   render() {
+    const { categories } = this.state;
     const judgeAccess = [
       USER_ROLE.JUDGE,
       USER_ROLE.JUDGE_FOR_MALE,
@@ -23,17 +36,23 @@ class App extends Component {
     return (
       <div>
         <Switch>
-          <Route path="/report" component={Report} />
-          <Route path="/login" component={Login} />
+          <Route
+            path="/report"
+            render={props => <Report {...props} categories={categories} />}
+          />
+          <Route
+            path="/login"
+            render={props => <Login {...props} categories={categories} />}
+          />
           <ProtectedRoute
             accessRoleIds={judgeAccess}
             path="/judges/:category"
-            component={JudgesMain}
+            render={props => <JudgesMain {...props} categories={categories} />}
           />
           <ProtectedRoute
             accessRoleIds={adminAccess}
             path="/"
-            component={Admin}
+            render={props => <Admin {...props} categories={categories} />}
           />
           <Route path="/not-found" component={NotFoundPage} />
           <Redirect to="/not-found" />

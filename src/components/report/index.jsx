@@ -18,18 +18,10 @@ class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
       isLoadingReport: false,
       categoryId: 1,
       candidateScoreByCategory: []
     };
-  }
-  async componentDidMount() {
-    try {
-      const { data } = await categoryService.getCategory();
-      const categories = data && data.map(categoryBuilderForUI);
-      this.setState({ categories });
-    } catch (error) {}
   }
   generateReport = async () => {
     const { categoryId } = this.state;
@@ -50,11 +42,9 @@ class Report extends Component {
     this.setState({ [name]: value });
   };
   render() {
-    const {
-      categories,
-      isLoadingReport,
-      candidateScoreByCategory
-    } = this.state;
+    const { isLoadingReport, candidateScoreByCategory } = this.state;
+    const { categories } = this.props;
+    debugger;
     const displayReport = !!(
       candidateScoreByCategory && candidateScoreByCategory.length
     );
