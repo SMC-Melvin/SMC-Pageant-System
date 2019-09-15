@@ -115,11 +115,28 @@ class JudgesMain extends Component {
         <Header />
         <div className="container">
           <div className="tabs">
-            <button className="btn btn-tabs">Production</button>
-            <button className="btn btn-tabs">First Round Interview</button>
-            <button className="btn btn-tabs">Talent</button>
-            <button className="btn btn-tabs">Gown</button>
-            <button className="btn btn-tabs">TOP 3</button>
+            <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Production</button>
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Swim Wear</button>
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Sports Wear</button>
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Preliminary</button>
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Formal Attire</button>
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-tabs">Q & A</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <Slider ref={c => (this.slider = c)} {...settings}>
