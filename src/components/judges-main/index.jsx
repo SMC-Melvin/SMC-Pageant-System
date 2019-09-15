@@ -28,16 +28,25 @@ class JudgesMain extends Component {
       id: '',
       alert: null,
       isValidated: false,
+      score: 0,
       currentUser: getCurrentUser(),
-      candidate: {
-        id: 0,
-        name: '',
-        number: ''
-      }
+      next: this.next.bind(this),
+      previous: this.previous.bind(this),
+      list: []
     };
   }
 
-  alertMessage = () => {};
+  next = () => {
+    this.slider.slickNext();
+  };
+
+  previous = () => {
+    this.slider.slickPrev();
+  };
+
+  onScoreChange = e => {
+    this.setState({ isValidated: false, score: e.target.value });
+  };
 
   // candidates = async event => {
   //   event.preventDefault();
@@ -49,21 +58,32 @@ class JudgesMain extends Component {
   //   console.log(data);
   // };
 
+  addScore = () => {
+    const newUser = { id: 3, name: 'Testing again' };
+    const list = [...this.state.list, newUser];
+    this.setState({ list });
+  };
+
   saveScore = () => {
-    // this.setState({ isValidated: true });
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You can still change your score anytime!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, save it!'
-    }).then(result => {
-      if (result.value) {
-        Swal.fire('SAVED!', 'Your score has been save.', 'success');
-      }
-    });
+    if (!this.state.score) {
+      Swal.fire('Woooah!', 'You did not score at all!!', 'error');
+    } else {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You can still change your score anytime!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, save it!'
+      }).then(result => {
+        if (result.value) {
+          Swal.fire('SAVED!', 'Your score has been save.', 'success');
+          
+          this.next();
+        }
+      });
+    }
   };
 
   async componentDidMount() {
@@ -78,7 +98,7 @@ class JudgesMain extends Component {
 
   render() {
     const settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
@@ -97,9 +117,9 @@ class JudgesMain extends Component {
             <button className="btn btn-tabs">TOP 3</button>
           </div>
 
-          <Slider {...settings}>
+          <Slider ref={c => (this.slider = c)} {...settings}>
             {this.state.cand.map(getCand => (
-              <div className="col-md-12">
+              <div className="col-md-12" key={getCand.Id}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="profile-pic"></div>
@@ -110,9 +130,11 @@ class JudgesMain extends Component {
                       <div className="can-name text-uppercase">
                         {getCand.Name}
                       </div>
-                      {/* <div className="can-faction text-uppercase">Faction 1</div> */}
+                      <div className="can-faction text-uppercase">
+                        Faction 1
+                      </div>
 
-                      <div className="score-holder col-md-12 margin-top-50">
+                      <div className="score-holder col-md-12">
                         <div className="row">
                           <div className="padding-zero">
                             <input
@@ -120,13 +142,18 @@ class JudgesMain extends Component {
                               placeholder="SCORE"
                               className="form-control score"
                               // value={this.state.currentNumber}
+                              onChange={this.onScoreChange}
                             />
                           </div>
                         </div>
                       </div>
 
-                      <button type="button" className="btn btn-cancel">
-                        Cancel
+                      <button
+                        type="button"
+                        className="btn btn-cancel"
+                        onClick={this.previous}
+                      >
+                        Previous
                       </button>
                       <button
                         type="button"
@@ -141,11 +168,14 @@ class JudgesMain extends Component {
               </div>
             ))}
           </Slider>
-          {this.state.cand.map(getNumber => (
-            <div className="flex-justify">
-              <div className="numbers">{getNumber.Number}</div>
-            </div>
-          ))}
+
+          <div className="flex-justify">
+            {this.state.cand.map(getNumber => (
+              <div className="numbers" key={getNumber.Id}>
+                {getNumber.Number}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

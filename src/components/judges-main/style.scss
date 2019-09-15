@@ -69,7 +69,7 @@ body {
     .can-faction {
       font-size: 30px;
       font-weight: bold;
-      margin-bottom: 35px;
+      margin-bottom: 5px;
     }
 
     .score-holder {
@@ -128,8 +128,8 @@ body {
 
   .flex-justify {
     margin: 30px 10px;
-    // display: inline-flex;
-    // justify-content: center;
+    display: inline-flex;
+    justify-content: center;
     text-align: center;
     width: 100%;
     .numbers {
@@ -143,6 +143,8 @@ body {
       justify-content: center;
       align-items: center;
       font-weight: bold;
+      margin: 0 10px;
+      cursor: pointer;
     }
   }
 }
