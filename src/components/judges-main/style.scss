@@ -148,3 +148,29 @@ body {
     }
   }
 }
+
+.candidate-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.score-board {
+  display: flex;
+  .score-board-item {
+    width: 30px;
+    height: 30px;
+    border: 1px solid gray;
+    border-right: none;
+    text-align: center;
+    cursor: pointer;
+    &:last-child {
+      border-right: 1px solid gray;
+    }
+    &.active {
+      background-color: maroon;
+      color: white;
+    }
+  }
+}

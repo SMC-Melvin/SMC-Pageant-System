@@ -13,6 +13,7 @@ import CategoryLink from './../category/category-link.component';
 
 import candidateService from '../../services/candidateService';
 import { getCurrentUser } from '../../utilities/auth.util';
+import CandidateViewer from './candidate-viewer.component';
 
 class JudgesMain extends Component {
   constructor(props) {
@@ -170,6 +171,8 @@ class JudgesMain extends Component {
               </div>
             ))}
           </div>
+
+          <CandidateViewer />
         </div>
       </div>
     );

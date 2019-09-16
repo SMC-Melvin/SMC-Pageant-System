@@ -14,7 +14,14 @@ const getCandidateAverageByCategory = categoryId => {
   return httpService.get(url);
 };
 
+const getCandidateByCategory = categoryId => {
+  const { Id: userId } = getCurrentUser();
+  const url = `${baseUrl}/candidate-by-category?userId=${userId}&categoryId=${categoryId}`;
+  return httpService.get(url);
+};
+
 export default {
   getCandidates,
-  getCandidateAverageByCategory
+  getCandidateAverageByCategory,
+  getCandidateByCategory
 };
