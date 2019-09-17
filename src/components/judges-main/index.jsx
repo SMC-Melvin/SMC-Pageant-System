@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
+import { withRouter } from 'react-router-dom';
+import scoreService from '../../services/scoreService';
+import { candidateByCategoryBuilderForUI } from './../../mappers/candidate.mapper';
+import ScoreBoard from './score-board.component';
 
 import Header from './header';
 import './style.scss';
@@ -29,7 +33,8 @@ class JudgesMain extends Component {
       currentUser: getCurrentUser(),
       next: this.next.bind(this),
       previous: this.previous.bind(this),
-      list: []
+      list: [],
+      candidatesByCategory: []
     };
   }
 
@@ -59,13 +64,31 @@ class JudgesMain extends Component {
   //   console.log(data);
   // };
 
-  addScore = () => {
-    const newUser = { id: 3, name: 'Testing again' };
-    const list = [...this.state.list, newUser];
-    this.setState({ list });
+  handleCandidateStateUpdate = ({ categoryId, candidateId, score }) => {
+    const { candidatesByCategory } = this.state;
+    const categoryIndex = candidatesByCategory
+      .map(category => category.categoryId)
+      .indexOf(categoryId);
+    const { candidates } = candidatesByCategory[categoryIndex];
+    const candidateIndex = candidates
+      .map(candidate => candidate.candidateId)
+      .indexOf(candidateId);
+    candidatesByCategory[categoryIndex].candidates[candidateIndex].score = [
+      { ...score }
+    ];
+    this.setState({ candidatesByCategory });
   };
 
-  saveScore = () => {
+  handleScoreChange = ({ categoryId, candidate, score }) => {
+    const { Id: userId } = getCurrentUser();
+    const { candidateId } = candidate;
+    const newScoreObj = {
+      ...score,
+      categoryId,
+      userId,
+      candidateId
+    };
+
     if (!this.state.score) {
       Swal.fire('Woooah!', 'You did not score at all!!', 'error');
     } else if (this.state.score < 1 || this.state.score > 10) {
@@ -79,14 +102,61 @@ class JudgesMain extends Component {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, save it!'
-      }).then(result => {
+      }).then(async result => {
         if (result.value) {
           Swal.fire('SAVED!', 'Your score has been save.', 'success');
+          try {
+            const { data } = await scoreService.setScore(newScoreObj);
+            newScoreObj.id = data;
+            this.handleCandidateStateUpdate({
+              categoryId,
+              candidateId,
+              score: newScoreObj
+            });
+          } catch (error) {}
           this.next();
         }
       });
     }
   };
+
+  ScoreBoard = () => {
+    
+  }
+
+  // ScoreBoard = ({ maxScore, score, onScoreChange }) => {
+  // const scoreList = Array.from(
+  //   { length: maxScore },
+  //   (value, index) => index + 1
+  // );
+  // const newScore = score || {
+  //   id: 0,
+  //   value: 0
+  // };
+
+
+  // saveScore = () => {
+  //   if (!this.state.score) {
+  //     Swal.fire('Woooah!', 'You did not score at all!!', 'error');
+  //   } else if (this.state.score < 1 || this.state.score > 10) {
+  //     this.errorMessage();
+  //   } else {
+  //     Swal.fire({
+  //       title: 'Are you sure?',
+  //       text: 'You can still change your score anytime!',
+  //       type: 'warning',
+  //       showCancelButton: true,
+  //       confirmButtonColor: '#3085d6',
+  //       cancelButtonColor: '#d33',
+  //       confirmButtonText: 'Yes, save it!'
+  //     }).then(result => {
+  //       if (result.value) {
+  //         Swal.fire('SAVED!', 'Your score has been save.', 'success');
+  //         this.next();
+  //       }
+  //     });
+  //   }
+  // };
 
   async componentDidMount() {
     try {
@@ -95,10 +165,22 @@ class JudgesMain extends Component {
         0
       );
       this.setState({ cand });
+
+      const { data } = await candidateService.getCandidateByCategory();
+      const candidatesByCategory =
+        data && data.map(candidateByCategoryBuilderForUI);
+      this.setState({ candidatesByCategory });
     } catch (error) {}
   }
 
   render() {
+    const { match } = this.props;
+    const { candidatesByCategory } = this.state;
+    const { category: path } = (match && match.params) || {};
+    const category = candidatesByCategory.find(
+      category => category.path === path
+    );
+
     const settings = {
       dots: false,
       infinite: true,
@@ -113,55 +195,58 @@ class JudgesMain extends Component {
         <div className="container">
           <CategoryLink categories={categories} />
           <Slider ref={c => (this.slider = c)} {...settings}>
-            {this.state.cand.map(getCand => (
-              <div className="col-md-12" key={getCand.Id}>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="profile-pic"></div>
-                  </div>
-                  <div className="col-md-6 margin-top-30">
-                    <div className="can-info">
-                      <div className="can-no">{getCand.Number}</div>
-                      <div className="can-name text-uppercase">
-                        {getCand.Name}
-                      </div>
-                      <div className="can-faction text-uppercase">
-                        Faction 1
-                      </div>
+            {/* {this.state.cand.map(getCand => ( */}
+            {category &&
+              category.candidates.length &&
+              category.candidates.map(candidate => (
+                <div className="col-md-12" key={candidate.candidateId}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="profile-pic"></div>
+                    </div>
+                    <div className="col-md-6 margin-top-30">
+                      <div className="can-info">
+                        <div className="can-no">{candidate.Number}</div>
+                        <div className="can-name text-uppercase">
+                          {candidate.Name}
+                        </div>
+                        <div className="can-faction text-uppercase">
+                          Faction: {candidate.Faction}
+                        </div>
 
-                      <div className="score-holder col-md-12">
-                        <div className="row">
-                          <div className="padding-zero">
-                            <input
-                              type="text"
-                              placeholder="SCORE"
-                              className="form-control score"
-                              // value={this.state.currentNumber}
-                              onChange={this.onScoreChange}
-                            />
+                        <div className="score-holder col-md-12">
+                          <div className="row">
+                            <div className="padding-zero">
+                              <input
+                                type="text"
+                                placeholder="SCORE"
+                                className="form-control score"
+                                // value={this.state.currentNumber}
+                                onChange={this.onScoreChange}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <button
-                        type="button"
-                        className="btn btn-cancel"
-                        onClick={this.previous}
-                      >
-                        Previous
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-save"
-                        onClick={this.saveScore}
-                      >
-                        Save
-                      </button>
+                        <button
+                          type="button"
+                          className="btn btn-cancel"
+                          onClick={this.previous}
+                        >
+                          Previous
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-save"
+                          onClick={this.handleScoreChange}
+                        >
+                          Save
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </Slider>
 
           <div className="flex-justify">
@@ -179,4 +264,4 @@ class JudgesMain extends Component {
   }
 }
 
-export default JudgesMain;
+export default withRouter(JudgesMain);
