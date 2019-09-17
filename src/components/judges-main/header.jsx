@@ -26,7 +26,9 @@ class Header extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
-            <a className="navbar-brand text-uppercase">SMCHLI Pageant System</a>
+            <a href="/#" className="navbar-brand text-uppercase">
+              SMCHLI Pageant System
+            </a>
             <button
               className="navbar-toggler"
               type="button"
@@ -41,12 +43,16 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="nav navbar-nav ml-auto">
                 <li className="nav-item active">
-                  <a className="navbar-brand text-uppercase margin-bottom-15">
+                  <a
+                    href="/#"
+                    className="navbar-brand text-uppercase margin-bottom-15"
+                  >
                     <p>{this.state.currentUser.Name}</p>
                   </a>
                 </li>
                 <li className="nav-item active">
                   <a
+                    href="/#"
                     className="nav-link margin-left-50"
                     onClick={this.handleUserLogout}
                   >

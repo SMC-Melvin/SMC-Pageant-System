@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import reactDom from 'react-dom';
 import SweetAlert from 'sweetalert2-react';
 
 import 'jquery';
@@ -11,15 +10,8 @@ import facebook from '../../assets/images/svg/facebook.svg';
 import googlePlus from '../../assets/images/svg/google-plus.svg';
 import github from '../../assets/images/svg/github-logo.svg';
 
-import AdminMain from '../admin-main/index';
-
 import authService from '../../services/authService';
-import candidateService from '../../services/candidateService';
 import { getCurrentUser } from '../../utilities/auth.util';
-import { USER_ROLE } from '../../constants/auth.constant';
-import categoryService from '../../services/categoryService';
-import { categoryBuilderForUI } from '../../mappers/category.mapper';
-
 import './style.scss';
 
 class Login extends Component {
@@ -29,7 +21,8 @@ class Login extends Component {
       fullname: '',
       password: '',
       isInvalidAccount: false,
-      errors: []
+      errors: [],
+      currentUser: null
     };
   }
 
@@ -61,19 +54,9 @@ class Login extends Component {
     this.clearValidationErr('password');
   };
 
-  getCandidates = async () => {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    try {
-      const { data } = await candidateService.getCandidates(currentUser.Id);
-    } catch (error) {}
-  };
-
   routeUser = data => {
-    const [defaultCategory] = this.props.categories || [];
-    const { path } = defaultCategory || { path: '' };
-    const routeUrl = data.RoleId === USER_ROLE.ADMIN ? '/' : `/judges/${path}`;
     localStorage.setItem('currentUser', JSON.stringify(data));
-    this.props.history.replace(routeUrl);
+    this.props.history.replace('/');
   };
 
   submitLogin = async event => {

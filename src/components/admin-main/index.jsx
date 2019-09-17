@@ -6,7 +6,6 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import Categories from './mainCategory';
 import Header from './fixedNav/header';
 import Footer from './fixedNav/footer';
 import UserPage from './../user/user-page.component';

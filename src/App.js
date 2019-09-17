@@ -5,14 +5,15 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from './components/login/index';
 import Admin from './components/admin-main/index';
 import JudgesMain from './components/judges-main/index';
-import Report from './components/report/index';
 import NotFoundPage from './components/common/not-found.component';
-import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
 import ProtectedRoute from './components/common/protectedRoute.component';
+import WelcomeScreen from './components/judges-main/welcome-screen.component';
 import { USER_ROLE } from './constants/auth.constant';
+import { getCurrentUser } from './utilities/auth.util';
 import categoryService from './services/categoryService';
 import { categoryBuilderForUI } from './mappers/category.mapper';
+import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
 
 class App extends Component {
   state = {
@@ -32,14 +33,9 @@ class App extends Component {
       USER_ROLE.JUDGE_FOR_MALE,
       USER_ROLE.JUDGE_FOR_FEMALE
     ];
-    const adminAccess = [USER_ROLE.ADMIN];
     return (
       <div>
         <Switch>
-          <Route
-            path="/report"
-            render={props => <Report {...props} categories={categories} />}
-          />
           <Route
             path="/login"
             render={props => <Login {...props} categories={categories} />}
@@ -50,9 +46,15 @@ class App extends Component {
             render={props => <JudgesMain {...props} categories={categories} />}
           />
           <ProtectedRoute
-            accessRoleIds={adminAccess}
             path="/"
-            render={props => <Admin {...props} categories={categories} />}
+            render={props => {
+              const currentUser = getCurrentUser();
+              return currentUser.RoleId === USER_ROLE.ADMIN ? (
+                <Admin {...props} categories={categories} />
+              ) : (
+                <WelcomeScreen {...props} categories={categories} />
+              );
+            }}
           />
           <Route path="/not-found" component={NotFoundPage} />
           <Redirect to="/not-found" />

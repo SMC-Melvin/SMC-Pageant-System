@@ -6,17 +6,11 @@ import 'popper.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
-//import logo from './logo.svg';
 import bell from '../../../assets/images/svg/bell.svg';
 import fb from '../../../assets/images/svg/fb.svg';
 import settings from '../../../assets/images/svg/settings.svg';
 import twitter from '../../../assets/images/svg/twitter.svg';
 import ig from '../../../assets/images/svg/ig.svg';
-import logout from '../../../assets/images/svg/logout.svg';
-import edit from '../../../assets/images/svg/edit.svg';
-import trash from '../../../assets/images/svg/trash.svg';
-// import philippines from '../../../assets/images/svg/philippines.svg';
-// import copyright from '../../../assets/images/svg/copyright.svg';
 
 class Footer extends Component {
   constructor(props) {

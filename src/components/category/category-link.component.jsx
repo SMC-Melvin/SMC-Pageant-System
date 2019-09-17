@@ -6,15 +6,16 @@ const CategoryLink = ({ categories, match }) => {
   const { category: categoryParam } = match.params;
   return (
     <div className="category-link-main">
-      <div class="category-link-container">
-        <div class="category-link">
+      <div className="category-link-container">
+        <div className="category-link">
           {categories.map(category => (
             <Link
+              key={category.id}
               to={`${category.path}`}
               className={categoryParam === category.path ? 'active' : ''}
             >
-              <span class="category-link__inner">
-                <span class="category-link__title">{category.name}</span>
+              <span className="category-link__inner">
+                <span className="category-link__title">{category.name}</span>
               </span>
             </Link>
           ))}

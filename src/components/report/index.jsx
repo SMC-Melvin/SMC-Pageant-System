@@ -5,9 +5,7 @@ import Loader from 'react-loader-spinner';
 import ReportPrintable from './report-printable.component';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import categoryService from '../../services/categoryService';
 import candidateService from '../../services/candidateService';
-import { categoryBuilderForUI } from '../../mappers/category.mapper';
 
 import { ReactComponent as IconFile } from './icons/file.svg';
 import { ReactComponent as IconPrint } from './icons/print.svg';
