@@ -12,7 +12,13 @@ const CategoryLink = ({ categories, match }) => {
             <Link
               key={category.id}
               to={`${category.path}`}
-              className={categoryParam === category.path ? 'active' : ''}
+              className={
+                categoryParam === category.path
+                  ? 'active'
+                  : category.id === 1
+                  ? 'disabled-link'
+                  : ''
+              }
             >
               <span className="category-link__inner">
                 <span className="category-link__title">{category.name}</span>

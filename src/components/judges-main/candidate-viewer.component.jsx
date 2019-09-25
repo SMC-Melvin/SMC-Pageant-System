@@ -9,7 +9,7 @@ import { getCurrentUser } from './../../utilities/auth.util';
 class CandidateViewer extends Component {
   state = {
     candidatesByCategory: []
-  };  
+  };
   async componentDidMount() {
     try {
       const { data } = await candidateService.getCandidateByCategory();

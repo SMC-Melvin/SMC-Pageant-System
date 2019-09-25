@@ -85,6 +85,10 @@ $base: 38px;
     background: #5d120f;
     color: white;
   }
+  
+  .disabled-link {
+    pointer-events: none;
+  }
 
   // 1000px
   ///////////////////////

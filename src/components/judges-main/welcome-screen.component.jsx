@@ -10,7 +10,7 @@ const handleLogout = history => {
 };
 
 const WelcomeScreen = ({ categories, history }) => {
-  const [defaultCategory] = categories || [];
+  const [disabledCategory, defaultCategory] = categories || [];
   const { path } = defaultCategory || { path: '' };
   const routeUrl = `/judges/${path}`;
   const { Name } = getCurrentUser();
@@ -20,10 +20,8 @@ const WelcomeScreen = ({ categories, history }) => {
       <div className="welcome-container">
         <h1>Welcome {name}!</h1>
         <span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Welcome to Saint Michael College of Hindang, Leyte, Inc. Pageant
+          System 2019. Please enjoy!
         </span>
         <div className="judge-button-container">
           <LinkContainer to={routeUrl}>

@@ -17,8 +17,10 @@ export function candidateBuilderForUI(data) {
       number: data.Number,
       name: data.Name,
       gender: data.Gender,
-      fction: data.Faction,
+      faction: data.Faction,
       images: data.Images,
+      defaultImage:
+        data.Images && data.Images.length ? data.Images[0].FileName : '',
       score: data.Score && data.Score.map(candidateScoreBuilderForUI)
     }
   );

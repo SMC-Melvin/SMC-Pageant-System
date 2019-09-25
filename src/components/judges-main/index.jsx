@@ -4,7 +4,6 @@ import 'sweetalert2/src/sweetalert2.scss';
 import { withRouter } from 'react-router-dom';
 import scoreService from '../../services/scoreService';
 import { candidateByCategoryBuilderForUI } from './../../mappers/candidate.mapper';
-import ScoreBoard from './score-board.component';
 
 import Header from './header';
 import './style.scss';
@@ -50,8 +49,24 @@ class JudgesMain extends Component {
     Swal.fire('Opsss!', 'Your score is either below 1 or above 10', 'error');
   };
 
-  onScoreChange = e => {
-    this.setState({ isValidated: false, score: e.target.value });
+  onScoreChanges = (event, categoryId, candidate) => {
+    const { Id: userId } = getCurrentUser();
+    const {
+      score: [score = {}],
+      candidateId
+    } = candidate;
+    const newScoreObj = {
+      ...score,
+      categoryId,
+      userId,
+      candidateId,
+      value: event.target.value
+    };
+    this.handleCandidateStateUpdate({
+      categoryId,
+      candidateId,
+      score: newScoreObj
+    });
   };
 
   // candidates = async event => {
@@ -65,6 +80,7 @@ class JudgesMain extends Component {
   // };
 
   handleCandidateStateUpdate = ({ categoryId, candidateId, score }) => {
+    debugger;
     const { candidatesByCategory } = this.state;
     const categoryIndex = candidatesByCategory
       .map(category => category.categoryId)
@@ -79,19 +95,21 @@ class JudgesMain extends Component {
     this.setState({ candidatesByCategory });
   };
 
-  handleScoreChange = ({ categoryId, candidate, score }) => {
+  handleScoreChange = ({ categoryId, candidate, score = {} }) => {
+    debugger;
     const { Id: userId } = getCurrentUser();
     const { candidateId } = candidate;
     const newScoreObj = {
       ...score,
       categoryId,
       userId,
-      candidateId
+      candidateId,
+      value: score.value || ''
     };
 
-    if (!this.state.score) {
+    if (!score.value) {
       Swal.fire('Woooah!', 'You did not score at all!!', 'error');
-    } else if (this.state.score < 1 || this.state.score > 10) {
+    } else if (score.value < 1 || score.value > 10) {
       this.errorMessage();
     } else {
       Swal.fire({
@@ -120,10 +138,6 @@ class JudgesMain extends Component {
     }
   };
 
-  ScoreBoard = () => {
-    
-  }
-
   // ScoreBoard = ({ maxScore, score, onScoreChange }) => {
   // const scoreList = Array.from(
   //   { length: maxScore },
@@ -133,7 +147,6 @@ class JudgesMain extends Component {
   //   id: 0,
   //   value: 0
   // };
-
 
   // saveScore = () => {
   //   if (!this.state.score) {
@@ -164,6 +177,7 @@ class JudgesMain extends Component {
         this.state.currentUser.Id,
         0
       );
+      debugger;
       this.setState({ cand });
 
       const { data } = await candidateService.getCandidateByCategory();
@@ -189,6 +203,7 @@ class JudgesMain extends Component {
       slidesToScroll: 1
     };
     const { categories } = this.props;
+    // debugger;
     return (
       <div className="main">
         <Header />
@@ -202,16 +217,18 @@ class JudgesMain extends Component {
                 <div className="col-md-12" key={candidate.candidateId}>
                   <div className="row">
                     <div className="col-md-6">
-                      <div className="profile-pic"></div>
+                      <div className="profile-pic">
+                        <img src={`../candidates/${candidate.defaultImage}`} />
+                      </div>
                     </div>
                     <div className="col-md-6 margin-top-30">
                       <div className="can-info">
-                        <div className="can-no">{candidate.Number}</div>
+                        <div className="can-no">{candidate.number}</div>
                         <div className="can-name text-uppercase">
-                          {candidate.Name}
+                          {candidate.name}
                         </div>
                         <div className="can-faction text-uppercase">
-                          Faction: {candidate.Faction}
+                          Faction: {candidate.faction}
                         </div>
 
                         <div className="score-holder col-md-12">
@@ -221,8 +238,19 @@ class JudgesMain extends Component {
                                 type="text"
                                 placeholder="SCORE"
                                 className="form-control score"
-                                // value={this.state.currentNumber}
-                                onChange={this.onScoreChange}
+                                value={
+                                  (candidate.score &&
+                                    candidate.score.length &&
+                                    candidate.score[0].value) ||
+                                  ''
+                                }
+                                onChange={event =>
+                                  this.onScoreChanges(
+                                    event,
+                                    category.categoryId,
+                                    candidate
+                                  )
+                                }
                               />
                             </div>
                           </div>
@@ -238,7 +266,13 @@ class JudgesMain extends Component {
                         <button
                           type="button"
                           className="btn btn-save"
-                          onClick={this.handleScoreChange}
+                          onClick={() =>
+                            this.handleScoreChange({
+                              categoryId: category.categoryId,
+                              candidate,
+                              score: candidate.score[0]
+                            })
+                          }
                         >
                           Save
                         </button>
@@ -257,7 +291,7 @@ class JudgesMain extends Component {
             ))}
           </div>
 
-          <CandidateViewer />
+          {/* <CandidateViewer /> */}
         </div>
       </div>
     );
