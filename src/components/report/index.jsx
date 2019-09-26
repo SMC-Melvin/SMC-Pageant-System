@@ -42,7 +42,6 @@ class Report extends Component {
   render() {
     const { isLoadingReport, candidateScoreByCategory } = this.state;
     const { categories } = this.props;
-    debugger;
     const displayReport = !!(
       candidateScoreByCategory && candidateScoreByCategory.length
     );

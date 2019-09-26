@@ -197,7 +197,7 @@ class JudgesMain extends Component {
 
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1
@@ -218,7 +218,7 @@ class JudgesMain extends Component {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="profile-pic">
-                        <img src={`../candidates/${candidate.defaultImage}`} />
+                        <img src={`../candidates/${candidate.defaultImage}`} width="100%" />
                       </div>
                     </div>
                     <div className="col-md-6 margin-top-30">

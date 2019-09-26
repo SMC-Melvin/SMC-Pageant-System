@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../../assets/images/Logo.png';
 
+import './style.scss';
+
 class ReportPrintable extends Component {
   render() {
     const { candidates } = this.props;
@@ -11,8 +13,8 @@ class ReportPrintable extends Component {
             <img
               src={logo}
               alt=""
-              width="50px"
-              height="50px"
+              width="100px"
+              height="100px"
               className="margin-50"
             />
             <h2 className="text-uppercase">
@@ -44,26 +46,32 @@ class ReportPrintable extends Component {
           </tbody>
         </table>
         <div>
-          <table classname="table text-center" width="100%">
+          <table
+            className="margin-bottom-100 margin-top-200"
+            border="0"
+            width="100%"
+          >
             <tr className="text-center">
-              <td className="text-uppercase">Judge Name</td>
-              <td className="text-uppercase">Judge Name</td>
-              <td className="text-uppercase">Judge Name</td>
-            </tr>
-            <tr className="margin-bottom-100 text-center">
-              <td>Judge 1</td>
-              <td>Judge 2</td>
-              <td>Judge 3</td>
-            </tr>
-            <tr className="text-center margin-top-50">
-              <td className="text-uppercase">Judge Name</td>
-              <td className="text-uppercase">Judge Name</td>
-              <td className="text-uppercase">Judge Name</td>
+              <th className="text-uppercase">Judge Name</th>
+              <th className="text-uppercase">Judge Name</th>
+              <th className="text-uppercase">Judge Name</th>
             </tr>
             <tr className="text-center">
               <td>Judge 1</td>
               <td>Judge 2</td>
               <td>Judge 3</td>
+            </tr>
+          </table>
+          <table className="margin-top-50" border="0" width="100%">
+            <tr className="text-center">
+              <th className="text-uppercase">Judge Name</th>
+              <th className="text-uppercase">Judge Name</th>
+              <th className="text-uppercase">Judge Name</th>
+            </tr>
+            <tr className="text-center">
+              <td>Judge 4</td>
+              <td>Judge 5</td>
+              <td>Judge 6</td>
             </tr>
           </table>
           {/* <div className="col-md-12 judges">
