@@ -29,6 +29,8 @@ class JudgesMain extends Component {
       alert: null,
       isValidated: false,
       score: 0,
+      slideIndex: 0,
+      updateCount: 0,
       currentUser: getCurrentUser(),
       next: this.next.bind(this),
       previous: this.previous.bind(this),
@@ -68,16 +70,6 @@ class JudgesMain extends Component {
       score: newScoreObj
     });
   };
-
-  // candidates = async event => {
-  //   event.preventDefault();
-  //   // const { userId, id } = this.state;
-  //   const { data } = await candidateService.getCandidates(
-  //     this.state.currentUser.Id,
-  //     0
-  //   );
-  //   console.log(data);
-  // };
 
   handleCandidateStateUpdate = ({ categoryId, candidateId, score }) => {
     debugger;
@@ -138,39 +130,6 @@ class JudgesMain extends Component {
     }
   };
 
-  // ScoreBoard = ({ maxScore, score, onScoreChange }) => {
-  // const scoreList = Array.from(
-  //   { length: maxScore },
-  //   (value, index) => index + 1
-  // );
-  // const newScore = score || {
-  //   id: 0,
-  //   value: 0
-  // };
-
-  // saveScore = () => {
-  //   if (!this.state.score) {
-  //     Swal.fire('Woooah!', 'You did not score at all!!', 'error');
-  //   } else if (this.state.score < 1 || this.state.score > 10) {
-  //     this.errorMessage();
-  //   } else {
-  //     Swal.fire({
-  //       title: 'Are you sure?',
-  //       text: 'You can still change your score anytime!',
-  //       type: 'warning',
-  //       showCancelButton: true,
-  //       confirmButtonColor: '#3085d6',
-  //       cancelButtonColor: '#d33',
-  //       confirmButtonText: 'Yes, save it!'
-  //     }).then(result => {
-  //       if (result.value) {
-  //         Swal.fire('SAVED!', 'Your score has been save.', 'success');
-  //         this.next();
-  //       }
-  //     });
-  //   }
-  // };
-
   async componentDidMount() {
     try {
       const { data: cand } = await candidateService.getCandidates(
@@ -200,7 +159,10 @@ class JudgesMain extends Component {
       infinite: false,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      afterChange: () =>
+        this.setState(state => ({ updateCount: state.updateCount + 1 })),
+      beforeChange: (current, next) => this.setState({ slideIndex: next })
     };
     const { categories } = this.props;
     // debugger;
@@ -218,7 +180,10 @@ class JudgesMain extends Component {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="profile-pic">
-                        <img src={`../candidates/${candidate.defaultImage}`} width="100%" />
+                        <img
+                          src={`../candidates/${candidate.defaultImage}`}
+                          width="100%"
+                        />
                       </div>
                     </div>
                     <div className="col-md-6 margin-top-30">
@@ -285,7 +250,12 @@ class JudgesMain extends Component {
 
           <div className="flex-justify">
             {this.state.cand.map(getNumber => (
-              <div className="numbers" key={getNumber.Id}>
+              <div
+                className="numbers"
+                key={getNumber.Id}
+                onClick={e => this.slider.slickGoTo(getNumber.Number - 1)}
+                style={{ backgroundColor: this.state.bgColor }}
+              >
                 {getNumber.Number}
               </div>
             ))}
