@@ -1,0 +1,44 @@
+.top-page {
+  margin-bottom: 20px;
+  .header {
+    margin: 15px 0;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .candidate-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      background-color: #5d120f;
+      color: white;
+    }
+    .candidate-average {
+      font-weight: bold;
+      font-size: 25px;
+    }
+    .candidate-details {
+      display: flex;
+      align-items: center;
+    }
+    .candidate-gender {
+      width: 80px;
+    }
+    .candidate-name {
+      font-weight: bold;
+    }
+  }
+  .loading-section {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

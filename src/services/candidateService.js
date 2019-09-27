@@ -20,8 +20,14 @@ const getCandidateByCategory = categoryId => {
   return httpService.get(url);
 };
 
+const setTopCandidate = candidate => {
+  const url = `${baseUrl}/top-candidate-set`;
+  return httpService.post(url, candidate);
+};
+
 export default {
   getCandidates,
   getCandidateAverageByCategory,
-  getCandidateByCategory
+  getCandidateByCategory,
+  setTopCandidate
 };

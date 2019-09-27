@@ -35,7 +35,12 @@ class ReportPrintable extends Component {
           </thead>
           <tbody>
             {candidates.map(candidate => (
-              <tr key={candidate.CandidateId} className="text-center">
+              <tr
+                key={candidate.CandidateId}
+                className={`text-center ${
+                  candidate.Order === 1 ? 'top-candidate' : ''
+                }`}
+              >
                 <td>{candidate.CandidateNumber}</td>
                 <td>{candidate.CandidateName}</td>
                 <td>{candidate.Gender}</td>
@@ -51,28 +56,32 @@ class ReportPrintable extends Component {
             border="0"
             width="100%"
           >
-            <tr className="text-center">
-              <th className="text-uppercase">Judge Name</th>
-              <th className="text-uppercase">Judge Name</th>
-              <th className="text-uppercase">Judge Name</th>
-            </tr>
-            <tr className="text-center">
-              <td>Judge 1</td>
-              <td>Judge 2</td>
-              <td>Judge 3</td>
-            </tr>
+            <tbody>
+              <tr className="text-center">
+                <th className="text-uppercase">Judge Name</th>
+                <th className="text-uppercase">Judge Name</th>
+                <th className="text-uppercase">Judge Name</th>
+              </tr>
+              <tr className="text-center">
+                <td>Judge 1</td>
+                <td>Judge 2</td>
+                <td>Judge 3</td>
+              </tr>
+            </tbody>
           </table>
           <table className="margin-top-50" border="0" width="100%">
-            <tr className="text-center">
-              <th className="text-uppercase">Judge Name</th>
-              <th className="text-uppercase">Judge Name</th>
-              <th className="text-uppercase">Judge Name</th>
-            </tr>
-            <tr className="text-center">
-              <td>Judge 4</td>
-              <td>Judge 5</td>
-              <td>Judge 6</td>
-            </tr>
+            <tbody>
+              <tr className="text-center">
+                <th className="text-uppercase">Judge Name</th>
+                <th className="text-uppercase">Judge Name</th>
+                <th className="text-uppercase">Judge Name</th>
+              </tr>
+              <tr className="text-center">
+                <td>Judge 4</td>
+                <td>Judge 5</td>
+                <td>Judge 6</td>
+              </tr>
+            </tbody>
           </table>
           {/* <div className="col-md-12 judges">
             <div className="row">

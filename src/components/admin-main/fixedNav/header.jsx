@@ -50,6 +50,11 @@ class Header extends Component {
                   </Link>
                 </li>
                 <li className="nav-item active">
+                  <Link to="/top-3" className="nav-link">
+                    Top 3
+                  </Link>
+                </li>
+                <li className="nav-item active">
                   <a
                     className="nav-link margin-left-50"
                     onClick={this.handleUserLogout}

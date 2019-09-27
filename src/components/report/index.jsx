@@ -41,7 +41,15 @@ class Report extends Component {
   };
   render() {
     const { isLoadingReport, candidateScoreByCategory } = this.state;
-    const { categories } = this.props;
+    const { categories: defaultCategories } = this.props;
+    const customReports = [
+      {
+        id: -1,
+        name: 'Top 3'
+      }
+    ];
+    const categories = [...defaultCategories, ...customReports];
+
     const displayReport = !!(
       candidateScoreByCategory && candidateScoreByCategory.length
     );

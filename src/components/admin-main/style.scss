@@ -4,6 +4,7 @@ html {
 }
 
 .main-section {
+  height: 100vh;
   .margin-left-50 {
     margin-left: 50px;
   }
@@ -59,6 +60,10 @@ html {
         }
       }
     }
+  }
+
+  .main-content {
+    min-height: 70%;
   }
 
   .footer {
