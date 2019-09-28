@@ -25,9 +25,15 @@ const setTopCandidate = candidate => {
   return httpService.post(url, candidate);
 };
 
+const checkTopCandidateAvailability = () => {
+  const url = `${baseUrl}/check-top-candidate`;
+  return httpService.get(url);
+};
+
 export default {
   getCandidates,
   getCandidateAverageByCategory,
   getCandidateByCategory,
-  setTopCandidate
+  setTopCandidate,
+  checkTopCandidateAvailability
 };

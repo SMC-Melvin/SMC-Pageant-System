@@ -37,10 +37,14 @@ class Report extends Component {
   };
   handleCategoryChange = ({ target }) => {
     const { value, name } = target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: parseInt(value) });
   };
   render() {
-    const { isLoadingReport, candidateScoreByCategory } = this.state;
+    const {
+      isLoadingReport,
+      candidateScoreByCategory,
+      categoryId
+    } = this.state;
     const { categories: defaultCategories } = this.props;
     const customReports = [
       {
@@ -62,6 +66,7 @@ class Report extends Component {
               name="categoryId"
               as="select"
               className="textbox"
+              value={categoryId}
               onChange={this.handleCategoryChange}
             >
               {categories.map(category => (
@@ -116,6 +121,7 @@ class Report extends Component {
 
               <ReportPrintable
                 candidates={candidateScoreByCategory}
+                categoryId={categoryId}
                 ref={el => (this.componentRef = el)}
               />
             </div>

@@ -5,7 +5,8 @@ import './style.scss';
 
 class ReportPrintable extends Component {
   render() {
-    const { candidates } = this.props;
+    const { candidates, categoryId } = this.props;
+    debugger;
     return (
       <div>
         <header>
@@ -38,7 +39,9 @@ class ReportPrintable extends Component {
               <tr
                 key={candidate.CandidateId}
                 className={`text-center ${
-                  candidate.Order === 1 ? 'top-candidate' : ''
+                  categoryId === -1 && candidate.Order === 1
+                    ? 'top-candidate'
+                    : ''
                 }`}
               >
                 <td>{candidate.CandidateNumber}</td>

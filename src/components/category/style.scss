@@ -72,6 +72,11 @@ $base: 38px;
 
   .category-link__title {
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: 5px;
+    }
   }
 
   .category-link a.active,

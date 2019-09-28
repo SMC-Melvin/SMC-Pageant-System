@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { ReactComponent as LockIcon } from './icons/lock.svg';
 import './style.scss';
 
-const CategoryLink = ({ categories, match }) => {
+const CategoryLink = ({
+  categories,
+  match,
+  isTopCandidateAlreadyDeclared,
+  onCategoryClick
+}) => {
   const { category: categoryParam } = match.params;
   return (
     <div className="category-link-main">
@@ -10,6 +16,7 @@ const CategoryLink = ({ categories, match }) => {
         <div className="category-link">
           {categories.map(category => (
             <Link
+              onClick={onCategoryClick}
               key={category.id}
               to={`${category.path}`}
               className={
@@ -17,12 +24,23 @@ const CategoryLink = ({ categories, match }) => {
                   ? 'active'
                   : category.id === 1
                   ? 'disabled-link'
+                  : isTopCandidateAlreadyDeclared && category.id !== 7
+                  ? 'disabled-link'
                   : ''
               }
             >
-              <span className="category-link__inner">
-                <span className="category-link__title">{category.name}</span>
-              </span>
+              <div className="category-link__inner">
+                <div className="category-link__title">
+                  {category.name}{' '}
+                  {categoryParam !== category.path &&
+                  ((isTopCandidateAlreadyDeclared && category.id !== 7) ||
+                    category.id === 1) ? (
+                    <LockIcon />
+                  ) : (
+                    ''
+                  )}
+                </div>
+              </div>
             </Link>
           ))}
         </div>
